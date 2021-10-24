@@ -12,4 +12,5 @@
     <color name="light_background">#FFF9FAFF</color>
     <color name="light_blue">#FF0869FF</color>
     <color name="light_grey">#FF777EA0</color>
+    <color name="titles_font_color">#FF1D2B53</color>
 </resources>

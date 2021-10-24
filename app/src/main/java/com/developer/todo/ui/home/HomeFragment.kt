@@ -2,6 +2,7 @@ package com.developer.todo.ui.home
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +19,13 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
     private var scaleFactor = 6
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private val mDrawerLayout by lazy {
+        binding.drawerLayout
+    }
+    private val mDashboard by lazy {
+        binding.dashboard
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,23 +48,26 @@ class HomeFragment : Fragment() {
 
 
     private fun configureDrawerMenu() {
-        val drawerLayout = binding.drawerLayout
-        val dashboard = binding.dashboard
-        drawerLayout.setScrimColor(Color.TRANSPARENT)
+
+        mDrawerLayout.setScrimColor(Color.TRANSPARENT)
 
         val actionBarDrawerToggle = object: ActionBarDrawerToggle(
             this.activity,
-            drawerLayout,
+            mDrawerLayout,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         ) {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 super.onDrawerSlide(drawerView, slideOffset)
                 val slideX = drawerView.width * slideOffset
-                dashboard.translationX = slideX
-                dashboard.scaleY = 1 - (slideOffset / scaleFactor);
+                mDashboard.translationX = slideX
+                mDashboard.scaleY = 1 - (slideOffset / scaleFactor);
             }
         }
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        mDrawerLayout.addDrawerListener(actionBarDrawerToggle)
+        binding.drawerMenuIcon.setOnClickListener() {
+            mDrawerLayout.openDrawer(Gravity.LEFT)
+        }
     }
+
 }
