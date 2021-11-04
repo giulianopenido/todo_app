@@ -6,13 +6,17 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.developer.todo.R
 import com.developer.todo.databinding.FragmentHomeBinding
+import com.developer.todo.ui.adapters.CategoryAdapter
 
 class HomeFragment : Fragment() {
 
@@ -37,6 +41,7 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         configureDrawerMenu()
+        configureCategoriesList()
 
         return binding.root
     }
@@ -61,13 +66,21 @@ class HomeFragment : Fragment() {
                 super.onDrawerSlide(drawerView, slideOffset)
                 val slideX = drawerView.width * slideOffset
                 mDashboard.translationX = slideX
-                mDashboard.scaleY = 1 - (slideOffset / scaleFactor);
+                mDashboard.scaleY = 1 - (slideOffset / scaleFactor)
+                mDashboard.scaleX = 1 - (slideOffset / scaleFactor)
             }
         }
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle)
         binding.drawerMenuIcon.setOnClickListener() {
             mDrawerLayout.openDrawer(Gravity.LEFT)
         }
+    }
+
+    private fun configureCategoriesList() {
+        val recyclerView = binding.categoriesRecyclerView
+        recyclerView.adapter = CategoryAdapter(homeViewModel.categories.value!!)
+        recyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+
     }
 
 }

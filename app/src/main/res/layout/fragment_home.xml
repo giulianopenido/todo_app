@@ -51,6 +51,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <TextView
+            android:id="@+id/whatsup_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="What's up, Joy!"
@@ -59,17 +60,40 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             android:layout_marginLeft="16dp"
             android:textSize="32sp"
+            android:textStyle="bold"
             android:textColor="@color/titles_font_color"/>
 
+        <TextView
+            android:id="@+id/categories_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Categorias"
+            android:textAllCaps="true"
+            app:layout_constraintTop_toBottomOf="@id/whatsup_message"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="14sp"
+            android:textColor="@color/light_grey"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categories_recycler_view"
+            app:layout_constraintTop_toBottomOf="@id/categories_title"
+            android:paddingStart="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            tools:listitem="@layout/category_item"
+        />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:id="@+id/nav_menu"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="start"-->
-<!--        android:background="@color/main_dark_blue" -->
-<!--        tools:visibility="gone"/>-->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/main_dark_blue"
+        tools:visibility="gone"/>
 </androidx.drawerlayout.widget.DrawerLayout>
 
