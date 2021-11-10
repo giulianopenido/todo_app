@@ -1,9 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
+apply plugin: 'kotlin-kapt'
 
 android {
+
     compileSdk 31
 
     defaultConfig {
@@ -47,6 +50,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    kapt "com.android.databinding:compiler:3.5.0"
 
     testImplementation 'junit:junit:4.+'
 
