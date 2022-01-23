@@ -24,9 +24,6 @@ class TaskAdapter(
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(tasks[position])
-        holder.binding.doneCheckbox.setOnClickListener {
-            onCheckboxClick?.invoke(position)
-        }
     }
 
     override fun getItemCount(): Int = tasks.size
@@ -46,8 +43,14 @@ class TaskAdapter(
                 binding.taskTitle.paintFlags = binding.taskTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 binding.doneCheckbox.setColorFilter(Color.parseColor(task.category.color))
             }
+            //TODO A new listener is settled every single time. Why don't transfer
+            // it to inside viewHolder initialization
+            binding.doneCheckbox.setOnClickListener {
+                onCheckboxClick?.invoke(adapterPosition)
+            }
         }
     }
+
 
 }
 

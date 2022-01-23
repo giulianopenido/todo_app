@@ -8,19 +8,16 @@ import com.developer.todo.repository.CategoryRepository
 import com.developer.todo.repository.TaskRepository
 import java.util.*
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val taskRepository : TaskRepository,
+    private val categoryRepository : CategoryRepository
+) : ViewModel() {
 
     var categories : MutableLiveData<MutableList<Category>>
     var tasks : MutableLiveData<MutableList<Task>>
-    private var categoryRepository : CategoryRepository
-    private var taskRepository : TaskRepository
-
 
     init {
-        categoryRepository = CategoryRepository()
         categories = categoryRepository.getAll()
-
-        taskRepository = TaskRepository()
         tasks = taskRepository.getAll()
     }
 
