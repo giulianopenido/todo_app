@@ -124,11 +124,14 @@ class HomeFragment : Fragment() {
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            from = viewHolder.adapterPosition
+            if(!orderChanged)
+                from = viewHolder.adapterPosition
+
             to = target.adapterPosition
             mTasksRecyclerView.adapter!!.notifyItemMoved(from, to)
             orderChanged = true
-            return orderChanged
+
+            return true
         }
 
 
@@ -141,7 +144,7 @@ class HomeFragment : Fragment() {
             super.onSelectedChanged(viewHolder, actionState)
             when(actionState) {
                  ItemTouchHelper.ACTION_STATE_IDLE -> {
-                    if(orderChanged) {
+                    if(orderChanged && from != to) {
                         homeViewModel.moveTask(from, to)
                         orderChanged = false
                     }

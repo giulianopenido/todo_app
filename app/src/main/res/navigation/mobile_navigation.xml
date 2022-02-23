@@ -12,7 +12,6 @@
         <action
             android:id="@+id/action_nav_home_to_add_task_fragment"
             app:destination="@id/add_task_fragment"
-            app:enterAnim="@anim/anim_bottom_to_up"
             app:popUpToInclusive="true" />
     </fragment>
 
