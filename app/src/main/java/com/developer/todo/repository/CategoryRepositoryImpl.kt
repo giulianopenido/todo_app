@@ -6,18 +6,16 @@ import com.developer.todo.model.Category
 
 class CategoryRepositoryImpl: CategoryRepository {
 
-    override fun getAll(): MutableLiveData<MutableList<Category>> {
+    override suspend fun getAll(): MutableLiveData<MutableList<Category>> {
         return MutableLiveData(
             mutableListOf(
-                Category("Business", 8, 2, "#ED27FF"),
-                Category("Personal", 10, 12, "#076AFF"),
-                Category("Work", 5, 4, "#0E1F54"),
+                Category(1,"Business", 8, 2, "#ED27FF"),
+                Category(2, "Personal", 10, 12, "#076AFF"),
+                Category(3, "Work", 5, 4, "#0E1F54"),
             )
         )
     }
 
-    override fun create() {
 
-    }
 
 }

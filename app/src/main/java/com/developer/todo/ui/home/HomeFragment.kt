@@ -12,17 +12,21 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.developer.todo.R
+import com.developer.todo.data.SharedPreferencesService
 import com.developer.todo.databinding.FragmentHomeBinding
 import com.developer.todo.ui.adapters.CategoryAdapter
 import com.developer.todo.ui.adapters.TaskAdapter
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment(
+) : Fragment() {
+    private val sharedPreferencesService: SharedPreferencesService by inject()
 
     private val homeViewModel: HomeViewModel by viewModel()
     private var _binding: FragmentHomeBinding? = null
-    private var scaleFactor = 6
     private val binding get() = _binding!!
+    private var scaleFactor = 6
 
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var mDashboard: View
@@ -36,6 +40,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        fillTextViews()
+
         mDrawerLayout = binding.drawerLayout
         mDashboard = binding.dashboard
         mTasksRecyclerView = binding.tasksRecyclerView
@@ -49,6 +56,10 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun fillTextViews() {
+        val whatsUpMessage = "What's up, ${sharedPreferencesService.getName()!!.split(" ")[0]}!"
+        binding.whatsUpMessage.text = whatsUpMessage
+    }
 
 
     override fun onDestroyView() {
@@ -76,14 +87,18 @@ class HomeFragment : Fragment() {
             }
         }
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle)
-        binding.drawerMenuIcon.setOnClickListener() {
+        binding.drawerMenuIcon.setOnClickListener {
             mDrawerLayout.openDrawer(GravityCompat.START)
         }
     }
 
     private fun configureListeners() {
         binding.fabAddTask.setOnClickListener() {
-            findNavController().navigate(R.id.action_nav_home_to_add_task_fragment)
+            findNavController().navigate(R.id.action_home_fragment_to_add_task_fragment)
+        }
+
+        homeViewModel.showLoading.observe {
+
         }
     }
 
@@ -128,7 +143,7 @@ class HomeFragment : Fragment() {
                 from = viewHolder.adapterPosition
 
             to = target.adapterPosition
-            mTasksRecyclerView.adapter!!.notifyItemMoved(from, to)
+            mTasksRecyclerView.adapter!!.notifyItemMoved(viewHolder.adapterPosition, to)
             orderChanged = true
 
             return true

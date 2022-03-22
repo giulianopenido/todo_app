@@ -1,24 +1,26 @@
 package com.developer.todo.ui.home
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.developer.todo.base.BaseViewModel
+import com.developer.todo.helper.SingleLiveEvent
 import com.developer.todo.model.Category
 import com.developer.todo.model.Task
 import com.developer.todo.repository.CategoryRepository
 import com.developer.todo.repository.TaskRepository
-import java.util.*
+import com.developer.todo.useCase.GetAllTasksUseCase
 
 class HomeViewModel(
-    private val taskRepository : TaskRepository,
-    private val categoryRepository : CategoryRepository
-) : ViewModel() {
+    getAllTasksUseCase: GetAllTasksUseCase
+) : BaseViewModel() {
 
-    var categories : MutableLiveData<MutableList<Category>>
-    var tasks : MutableLiveData<MutableList<Task>>
 
-    init {
-        categories = categoryRepository.getAll()
-        tasks = taskRepository.getAll()
+    lateinit var categories : MutableLiveData<MutableList<Category>>
+    lateinit var tasks : MutableLiveData<MutableList<Task>>
+
+    fun getAllTasks() {
+        doAsyncWork {
+
+        }
     }
 
     fun toggleIsDone(position: Int) {
@@ -30,7 +32,9 @@ class HomeViewModel(
     }
 
     fun moveTask(from: Int, to: Int) {
-        Collections.swap(tasks.value!!, from, to)
+        tasks.value!!.apply {
+            add(to, removeAt(from))
+        }
     }
 
 }

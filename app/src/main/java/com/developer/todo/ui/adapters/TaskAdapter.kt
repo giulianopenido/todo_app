@@ -13,7 +13,7 @@ import com.developer.todo.databinding.TaskItemBinding
 import com.developer.todo.model.Task
 
 class TaskAdapter(
-    val tasks: MutableList<Task>
+    private val tasks: MutableList<Task>
 ): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     var onCheckboxClick: ((Int) -> Unit)? = null
@@ -31,7 +31,7 @@ class TaskAdapter(
     inner class TaskViewHolder(val binding: TaskItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: Task) {
-            binding.task =  task
+            binding.task = task
 
             if(task.isDone) {
                 binding.doneCheckbox.setImageResource(R.drawable.ic_baseline_check_circle_24)

@@ -38,7 +38,7 @@
                 android:layout_marginTop="18dp"
                 android:textColor="@color/light_grey"
                 android:textSize="14sp"
-                android:text='@{category.numOfTasks==1 ? category.numOfTasks+" task"  : category.numOfTasks+" tasks"}'
+                android:text='@{category.numOfTasks == 1 ? category.numOfTasks+" task"  : category.numOfTasks+" tasks"}'
                 tools:text="40 tasks"/>
 
             <TextView

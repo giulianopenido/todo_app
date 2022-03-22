@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 
 interface IRepository<T> {
 
-    fun getAll(): MutableLiveData<MutableList<T>>
-    fun create()
+    suspend fun getAll(): MutableLiveData<MutableList<T>>
 
 }

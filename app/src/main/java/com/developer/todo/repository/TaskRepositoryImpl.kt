@@ -2,32 +2,23 @@ package com.developer.todo.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.developer.todo.base.IRepository
+import com.developer.todo.data.SharedPreferencesService
 import com.developer.todo.model.Category
 import com.developer.todo.model.Task
+import com.developer.todo.network.TasksApi
 
-class TaskRepositoryImpl(): TaskRepository {
+class TaskRepositoryImpl(
+    private val tasksApi: TasksApi,
+    private val sharedPreferencesService: SharedPreferencesService
+): TaskRepository {
 
-    override fun getAll(): MutableLiveData<MutableList<Task>> {
-        val cat1 = Category("Business", 8, 2, "#ED27FF")
-        val cat2 = Category("Personal", 10, 12, "#076AFF")
+    private val userId = sharedPreferencesService.getUserId()
+
+    override suspend fun getAll(): MutableLiveData<MutableList<Task>> {
         return MutableLiveData(
-            mutableListOf(
-                Task("Daily meeting with team", "", cat1),
-                Task("Pay for rent", "", cat2, true),
-                Task("Check e-mails", "", cat1),
-                Task("Lunch with Emma", "", cat1),
-                Task("Meditation", "", cat2),
-                Task("Teste", "", cat1),
-                Task("Pay for rent", "", cat2, true),
-                Task("Check e-mails", "", cat1),
-                Task("Lunch with Emma", "", cat1),
-                Task("Meditation", "", cat2)
-            )
+            tasksApi.getAllTasks(userId)
         )
     }
 
-    override fun create() {
-
-    }
 
 }
